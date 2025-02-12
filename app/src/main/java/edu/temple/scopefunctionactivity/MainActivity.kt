@@ -15,33 +15,43 @@ class MainActivity : AppCompatActivity() {
 
         // You can test your helper functions by  calling them from onCreate() and
         // printing their output to the Log, which is visible in the LogCat:
-        // eg. Log.d("function output", getTestDataArray().toString())
+        //test
+        //Log.d("function output", "test")
 
-        //1
+        Log.d("function output", "test")
+
+        //test data array
         val testDataArray = getTestDataArray()
-        Log.d("function 1 output", testDataArray.toString())
+        Log.d("function 1 output", "Sorted Array: ${testDataArray.joinToString(", ")}")
 
-        //2
-        val testDoubleList = List(10) {Random.nextDouble(1.0,100.0)}
+        //average less than median result
+        val testDoubleList = List(10) { Random.nextDouble(1.0, 100.0) }
+        val formattedList = testDoubleList.joinToString(", ") { String.format("%.2f", it) }
         val avgLessThanMedianResult = averageLessThanMedian(testDoubleList)
-        Log.d("function 2 output", "List: $testDoubleList, Result: $avgLessThanMedianResult")
+        Log.d("function 2 output", "List: $formattedList, Result: $avgLessThanMedianResult")
 
-        //3
-        val testCollection = List(10) {Random.nextInt(1,100)}
-        val testView = getView(0,null, testCollection, this@MainActivity)
-        Log.d("function 3 output", "View Text: ${testView.text}")
+        //get view outputs
+        val testCollection = List(10) { Random.nextInt(1, 100) }
+        val testView = getView(0, null, testCollection, this@MainActivity)
+        Log.d("function 3 output", "TextView content: ${testView.text}, Collection value at position 0: ${testCollection[0]}")
     }
 
     private fun getTestDataArray() = MutableList(10) { Random.nextInt() }.apply { this.sort() }
 
     private fun averageLessThanMedian(listOfNumbers: List<Double>) = listOfNumbers.sorted().let {
-        val median = if (it.size % 2 == 0) (it[it.size / 2] + it[(it.size - 1) / 2]) / 2 else it[it.size / 2]
+        val median =
+            if (it.size % 2 == 0)
+                    (it[it.size / 2] + it[(it.size - 1) / 2]) / 2
+            else
+                it[it.size / 2]
         listOfNumbers.average() < median
     }
 
     private fun getView(position: Int, recycledView: View?, collection: List<Int>, context: Context) =
         (recycledView as? TextView ?: TextView(context).apply {
-            setPadding(5,10,10,0); textSize = 22f }).apply {
+            setPadding(5,10,10,0)
+            textSize = 22f
+        }).apply {
             text = collection[position].toString()
         }
 
